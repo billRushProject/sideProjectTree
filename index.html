@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timer</title>
+</head>
+<body>
+    <div>
+        <div>
+            <div>Loop:</div>
+            <input type="number" min="0" id="loop" value="0">
+        </div>
+        <div>
+            <div>Time:</div>
+            <!--
+            <input type="number" value="0" min="0" max="60" id="hours">:
+            <input type="number" value="0" min="0" max="60" id="mins">:
+            -->
+            <input type="number" value="0" min="0" max="60" id="secs">
+        </div>
+        <div>
+            <div>Break</div>
+            <input type="number" value="0" id="breakTime" >
+        </div>
+        <button onclick="start()" >Start</button>
+    </div>
+    <div id="timeMessage">Hello</div>
+<script>
+
+function start(){
+    var n= document.getElementById("loop").value;
+    var secs=document.getElementById("secs").value;
+    var breakTime=document.getElementById("breakTime").value;
+    for(let i=1; i<=n;i++){
+        var tempSecond=secs;
+        var tempbreakTime=breakTime;
+        var message="Count:"+tempSecond;
+        while(tempSecond>0){
+            message="Count:"+tempSecond;
+            console.log(message);
+            tempSecond--;
+            sleep(1000,message);
+        }
+        while(tempbreakTime>0){
+            message="BreakTime:"+tempbreakTime;
+            console.log(message);
+            tempbreakTime--;
+            sleep(1000,message);
+        }
+    }
+}
+
+
+    function sleep(num,message) {
+        let now = new Date();
+        let stop = now.getTime() + num;
+        while(true) {
+            now = new Date();
+            document.getElementById("timeMessage").innerHTML=message;
+            if(now.getTime() > stop) return;
+        }
+    }
+
+    
+</script>
+</body>
+</html>
