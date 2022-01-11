@@ -62,7 +62,7 @@ button{
     text-align: center;
 }
 .title{
-    margin: 15px auto   ;
+    margin: 8px auto   ;
     padding: 15px;
     background-color: #1A374D;
     color: #B1D0E0;
@@ -83,10 +83,10 @@ button{
         
         <div class="setup">
             <div class="title">
-                Work out timer
+                Circuit Training Timer
                 
             </div>
-            <div class="form">
+            <div class="form" id="inputData">
 
                 <div class="formElement">
                     <div class="formTitle">Loop</div>
@@ -95,20 +95,20 @@ button{
                     </div>
                 </div>
                 <div class="formElement">
-                    <div class="formTitle">Time</div>
+                    <div class="formTitle">Duration</div>
                     <div class="formInput">
                         <input type="number" value="30" min="0" max="60" id="secs">
                     </div>
                     </div>
                 <div class="formElement">
-                    <div class="formTitle">Break</div>
+                    <div class="formTitle">Break time</div>
                     <div class="formInput">
                         <input type="number" value="30" id="breakTime" >
                     </div>
-            </div>
+                </div>
                 
             </div>
-            <div class="element">
+            <div class="element" id="element">
                 <button onclick="start()" id="startBtn" >Start</button>
             </div>
             
@@ -120,7 +120,10 @@ button{
 
 function start(){
     var myTimer;
-    document.getElementById("startBtn").style.display = "none";
+    document.getElementById("element").style.display = "none";
+    document.getElementById("inputData").style.display = "none";
+    
+    var num=1;
     var n= document.getElementById("loop").value-1;
     var secs=document.getElementById("secs").value;
     var breakTime=document.getElementById("breakTime").value;
@@ -131,7 +134,8 @@ function start(){
             secs--;
             document.getElementById("timeMessage").innerHTML=
             `<div>
-            <h3>Remaining rounds:${n}</h3>
+                <h3 class='formTitle'>Round</h3>
+                <h3>${num}/${document.getElementById("loop").value}</h3>
             <br>
             Running
         <div>
@@ -142,22 +146,32 @@ function start(){
             breakTime--;
             document.getElementById("timeMessage").innerHTML=
             `<div>
-            <h3>Remaining rounds:${n}</h3>
+            <h3 class='formTitle'>Round</h3>
+            <h3>${num}/${document.getElementById("loop").value}</h3>
             <br>
             Break
-        <div>
-            ${breakTime}
-        </div>`;
+            <div>
+                ${breakTime}
+            </div>`;
             
         }else if(n>0){
+            ++num;
             n--;
             secs=document.getElementById("secs").value;
             breakTime=document.getElementById("breakTime").value;
         }else{
             clearInterval(myTimer);
-            document.getElementById('startBtn').style.display = "block";
-            document.getElementById('timeMessage').innerHTML = "";
-        
+            
+            document.getElementById("inputData").style.display = "block";
+            document.getElementById('element').style.display = "block";
+            document.getElementById('timeMessage').innerHTML = 
+            `<div class='formTitle'>Finish the Training</div> 
+            <br> Loop ${document.getElementById("loop").value}
+            <br>
+            Duration : ${document.getElementById("secs").value}
+            <br>
+            Break : ${document.getElementById("breakTime").value}
+            `
         }
     }
     
