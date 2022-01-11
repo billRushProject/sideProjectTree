@@ -21,6 +21,7 @@ body{
 
 .setup{
     width: 500px;
+    min-width: 500px;
     background-color: #B1D0E0;
     position: absolute;
     display: flex;
@@ -76,6 +77,11 @@ button{
     padding: 5px 8px;
     color: #1A374D;
 }
+.imgDiv{
+    display: block;
+    margin: 8px auto;
+    width: 80%;
+}
 </Style>
 <body>
 
@@ -112,9 +118,9 @@ button{
                 <button onclick="start()" id="startBtn" >Start</button>
             </div>
             
-    <div id="timeMessage">
-       
-        </div>
+    <div id="timeMessage"></div>
+    
+        
 </div>
     <script>
 
@@ -137,8 +143,9 @@ function start(){
                 <h3 class='formTitle'>Round</h3>
                 <h3>${num}/${document.getElementById("loop").value}</h3>
             <br>
-            Running
-        <div>
+            Workout
+            <img src="img/workout2.gif" class="imgDiv" alt="" width="400" >
+    <div>
             ${secs}
         </div>`;
             
@@ -148,9 +155,11 @@ function start(){
             `<div>
             <h3 class='formTitle'>Round</h3>
             <h3>${num}/${document.getElementById("loop").value}</h3>
-            <br>
-            Break
+            
+            <img src="img/break2.gif" class="imgDiv" alt="" width="300" >
+            
             <div>
+                Break<br>
                 ${breakTime}
             </div>`;
             
