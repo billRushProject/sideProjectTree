@@ -6,62 +6,164 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Timer</title>
 </head>
+<Style>
+body{
+    margin: 0px;
+    font-family: "Lucida Console", "Courier New", monospace;
+
+}
+.wrapper{
+    background-color: #1A374D;
+    position: relative;
+    width: 100%;
+    height: 100vh;
+}
+
+.setup{
+    width: 500px;
+    background-color: #B1D0E0;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    border:rgb(35, 35, 92) solid 5px;
+    border-radius: 15px;   
+}
+.formElement,.element{
+    margin: 15px auto;
+    width: 300px;
+}
+.formElement{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+input[type=number]{
+    width: 100px;
+    height: 30px;
+    border: black solid 2px;
+    border-radius: 8px;
+    text-align: center;
+}
+button{
+    height: 40px;
+    background-color: #406882;
+    color: aliceblue;
+    font-size: 16px;
+    border-radius: 15px;
+    width: 100%;
+
+}
+#timeMessage{
+    padding: 15px 20px;
+    margin: 0px auto;
+    text-align: center;
+}
+.title{
+    margin: 15px auto   ;
+    padding: 15px;
+    background-color: #1A374D;
+    color: #B1D0E0;
+}
+
+.formTitle{
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    background-color: #6998AB;
+    padding: 5px 8px;
+    color: #1A374D;
+}
+</Style>
 <body>
-    <div>
-        <div>
-            <div>Loop:</div>
-            <input type="number" min="0" id="loop" value="0">
+
+    <div class="wrapper">
+        
+        <div class="setup">
+            <div class="title">
+                Work out timer
+                
+            </div>
+            <div class="form">
+
+                <div class="formElement">
+                    <div class="formTitle">Loop</div>
+                    <div class="formInput">
+                        <input type="number" min="1" id="loop" value="1">
+                    </div>
+                </div>
+                <div class="formElement">
+                    <div class="formTitle">Time</div>
+                    <div class="formInput">
+                        <input type="number" value="30" min="0" max="60" id="secs">
+                    </div>
+                    </div>
+                <div class="formElement">
+                    <div class="formTitle">Break</div>
+                    <div class="formInput">
+                        <input type="number" value="30" id="breakTime" >
+                    </div>
+            </div>
+                
+            </div>
+            <div class="element">
+                <button onclick="start()" id="startBtn" >Start</button>
+            </div>
+            
+    <div id="timeMessage">
+       
         </div>
-        <div>
-            <div>Time:</div>
-            <!--
-            <input type="number" value="0" min="0" max="60" id="hours">:
-            <input type="number" value="0" min="0" max="60" id="mins">:
-            -->
-            <input type="number" value="0" min="0" max="60" id="secs">
-        </div>
-        <div>
-            <div>Break</div>
-            <input type="number" value="0" id="breakTime" >
-        </div>
-        <button onclick="start()" >Start</button>
-    </div>
-    <div id="timeMessage">Hello</div>
-<script>
+</div>
+    <script>
 
 function start(){
-    var n= document.getElementById("loop").value;
+    var myTimer;
+    document.getElementById("startBtn").style.display = "none";
+    var n= document.getElementById("loop").value-1;
     var secs=document.getElementById("secs").value;
     var breakTime=document.getElementById("breakTime").value;
-    for(let i=1; i<=n;i++){
-        var tempSecond=secs;
-        var tempbreakTime=breakTime;
-        var message="Count:"+tempSecond;
-        while(tempSecond>0){
-            message="Count:"+tempSecond;
-            console.log(message);
-            tempSecond--;
-            sleep(1000,message);
-        }
-        while(tempbreakTime>0){
-            message="BreakTime:"+tempbreakTime;
-            console.log(message);
-            tempbreakTime--;
-            sleep(1000,message);
+    clearInterval(myTimer);
+    myTimer= setInterval(clock,1000);
+    function clock(){
+        if(secs!=0){
+            secs--;
+            document.getElementById("timeMessage").innerHTML=
+            `<div>
+            <h3>Remaining rounds:${n}</h3>
+            <br>
+            Running
+        <div>
+            ${secs}
+        </div>`;
+            
+        }else if(breakTime!=0){
+            breakTime--;
+            document.getElementById("timeMessage").innerHTML=
+            `<div>
+            <h3>Remaining rounds:${n}</h3>
+            <br>
+            Break
+        <div>
+            ${breakTime}
+        </div>`;
+            
+        }else if(n>0){
+            n--;
+            secs=document.getElementById("secs").value;
+            breakTime=document.getElementById("breakTime").value;
+        }else{
+            clearInterval(myTimer);
+            document.getElementById('startBtn').style.display = "block";
+            document.getElementById('timeMessage').innerHTML = "";
+        
         }
     }
+    
 }
 
 
-    function sleep(num,message) {
-        let now = new Date();
-        let stop = now.getTime() + num;
-        while(true) {
-            now = new Date();
-            document.getElementById("timeMessage").innerHTML=message;
-            if(now.getTime() > stop) return;
-        }
-    }
 
     
 </script>
