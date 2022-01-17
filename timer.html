@@ -62,8 +62,10 @@ button{
     margin: 0px auto;
     text-align: center;
 }
-.title{
+.title,.title2{
+    text-align: center;
     margin: 8px auto   ;
+    width: 50%;
     padding: 15px;
     background-color: #1A374D;
     color: #B1D0E0;
@@ -88,12 +90,11 @@ button{
     <div class="wrapper">
         
         <div class="setup">
-            <div class="title">
-                Circuit Training Timer
-                
+            <div class="title" id="title">
+                Circuit Training Timer     
             </div>
             <div class="form" id="inputData">
-
+                
                 <div class="formElement">
                     <div class="formTitle">Loop</div>
                     <div class="formInput">
@@ -114,20 +115,76 @@ button{
                 </div>
                 
             </div>
+            
             <div class="element" id="element">
                 <button onclick="start()" id="startBtn" >Start</button>
             </div>
+            <div class="title2" id="title2">
+                Countdown timer     
+            </div>
+            <div class="form" id="inputData2">
+                
+                <div class="formElement">
+                    <div class="formTitle">Duration</div>
+                    <div class="formInput">
+                        <input type="number" value="30" min="0" max="60" id="countDownTime">
+                    </div>
+                    </div>
+            </div>
             
-    <div id="timeMessage"></div>
+            <div class="element" id="element2">
+                <button onclick="startCountDown()" id="startBtn" >Start</button>
+            </div>
+            
+            <div id="timeMessage"></div>
     
-        
-</div>
+        </div>
+    </div>
     <script>
+var myTimer;
+function startCountDown(){
+    var countDownTime=document.getElementById("countDownTime").value;
+    document.getElementById("title").style.display = "none";
+    document.getElementById("inputData").style.display = "none";
+    document.getElementById("element").style.display = "none";
+    document.getElementById("inputData2").style.display = "none";
+    document.getElementById("element2").style.display = "none";
+    clearInterval(myTimer);
 
+    myTimer= setInterval(countDown,1000);
+    function countDown(){
+        if(countDownTime!=0){
+            countDownTime--;
+            document.getElementById("timeMessage").innerHTML=
+            `
+            TIME
+            <img src="img/countDown.gif" class="imgDiv" alt="" width="400" >
+            <div>
+                ${countDownTime}
+            </div>`;
+        }else{
+            clearInterval(myTimer);
+            document.getElementById('timeMessage').innerHTML = 
+            `<div class='formTitle'>Time is up</div> 
+            
+            Duration : ${document.getElementById("countDownTime").value}
+            `;
+        document.getElementById("title1").style.display = "block";
+        document.getElementById("inputData").style.display = "block";
+        document.getElementById("element").style.display = "block";
+        document.getElementById("inputData2").style.display = "block";
+        document.getElementById("element2").style.display = "block";
+    
+        }
+    }
+}
 function start(){
-    var myTimer;
+        
     document.getElementById("element").style.display = "none";
     document.getElementById("inputData").style.display = "none";
+    document.getElementById("title2").style.display = "none";
+    document.getElementById("inputData2").style.display = "none";
+    document.getElementById("element2").style.display = "none";
     
     var num=1;
     var n= document.getElementById("loop").value-1;
@@ -145,9 +202,9 @@ function start(){
             <br>
             Workout
             <img src="img/workout2.gif" class="imgDiv" alt="" width="400" >
-    <div>
-            ${secs}
-        </div>`;
+            <div>
+                ${secs}
+            </div>`;
             
         }else if(breakTime!=0){
             breakTime--;
@@ -156,10 +213,10 @@ function start(){
             <h3 class='formTitle'>Round</h3>
             <h3>${num}/${document.getElementById("loop").value}</h3>
             
-            <img src="img/break2.gif" class="imgDiv" alt="" width="300" >
             
             <div>
-                Break<br>
+                Break
+                <img src="img/break2.gif" class="imgDiv" alt="" width="300" >
                 ${breakTime}
             </div>`;
             
@@ -173,6 +230,9 @@ function start(){
             
             document.getElementById("inputData").style.display = "block";
             document.getElementById('element').style.display = "block";
+            document.getElementById("title2").style.display = "block";
+            document.getElementById("inputData2").style.display = "block";
+            document.getElementById("element2").style.display = "block";
             document.getElementById('timeMessage').innerHTML = 
             `<div class='formTitle'>Finish the Training</div> 
             <br> Loop ${document.getElementById("loop").value}
