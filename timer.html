@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" href="img\icon.png">
     <title>Timer</title>
 </head>
 <Style>
 body{
     margin: 0px;
     font-family: "Lucida Console", "Courier New", monospace;
-
 }
 .wrapper{
     background-color: #1A374D;
@@ -18,10 +19,8 @@ body{
     width: 100%;
     height: 100vh;
 }
-
 .setup{
     width: 500px;
-    min-width: 500px;
     background-color: #B1D0E0;
     position: absolute;
     display: flex;
@@ -84,17 +83,28 @@ button{
     margin: 8px auto;
     width: 80%;
 }
+@media only screen and (max-width: 600px) {
+    .setup{
+        width: 350px;
+        background-color: #B1D0E0;
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        border:rgb(35, 35, 92) solid 5px;
+        border-radius: 15px;   
+    }
+}
 </Style>
 <body>
-
     <div class="wrapper">
-        
         <div class="setup">
             <div class="title" id="title">
                 Circuit Training Timer     
             </div>
             <div class="form" id="inputData">
-                
                 <div class="formElement">
                     <div class="formTitle">Loop</div>
                     <div class="formInput">
@@ -113,25 +123,22 @@ button{
                         <input type="number" value="30" id="breakTime" >
                     </div>
                 </div>
-                
             </div>
-            
             <div class="element" id="element">
                 <button onclick="start()" id="startBtn" >Start</button>
             </div>
             <div class="title2" id="title2">
-                Countdown timer     
+                Countdown timer
             </div>
             <div class="form" id="inputData2">
                 
                 <div class="formElement">
                     <div class="formTitle">Duration</div>
                     <div class="formInput">
-                        <input type="number" value="30" min="0" max="60" id="countDownTime">
+                        <input type="number" value="60" min="0" max="60" id="countDownTime">
                     </div>
                     </div>
             </div>
-            
             <div class="element" id="element2">
                 <button onclick="startCountDown()" id="startBtn" >Start</button>
             </div>
@@ -141,110 +148,108 @@ button{
         </div>
     </div>
     <script>
-var myTimer;
-function startCountDown(){
-    var countDownTime=document.getElementById("countDownTime").value;
-    document.getElementById("title").style.display = "none";
-    document.getElementById("inputData").style.display = "none";
-    document.getElementById("element").style.display = "none";
-    document.getElementById("inputData2").style.display = "none";
-    document.getElementById("element2").style.display = "none";
-    clearInterval(myTimer);
+        var myTimer;
+        function startCountDown(){
+            var countDownTime=document.getElementById("countDownTime").value;
+            document.getElementById("title").style.display = "none";
+            document.getElementById("inputData").style.display = "none";
+            document.getElementById("element").style.display = "none";
+            document.getElementById("inputData2").style.display = "none";
+            document.getElementById("element2").style.display = "none";
+            clearInterval(myTimer);
 
-    myTimer= setInterval(countDown,1000);
-    function countDown(){
-        if(countDownTime!=0){
-            countDownTime--;
-            document.getElementById("timeMessage").innerHTML=
-            `
-            TIME
-            <img src="img/countDown.gif" class="imgDiv" alt="" width="400" >
-            <div>
-                ${countDownTime}
-            </div>`;
-        }else{
-            clearInterval(myTimer);
-            document.getElementById('timeMessage').innerHTML = 
-            `<div class='formTitle'>Time is up</div> 
+            myTimer= setInterval(countDown,1000);
+            function countDown(){
+                if(countDownTime!=0){
+                    countDownTime--;
+                    document.getElementById("timeMessage").innerHTML=
+                    `
+                    TIME
+                    <img src="img/break.gif" class="imgDiv" alt="" width="400" >
+                    <div>
+                        ${countDownTime}
+                    </div>`;
+                }else{
+                    clearInterval(myTimer);
+                    document.getElementById('timeMessage').innerHTML = 
+                    `<div class='formTitle'>Time is up</div> 
+                    
+                    Duration : ${document.getElementById("countDownTime").value}
+                    `;
+                    document.getElementById("inputData").style.display = "block";
+                    document.getElementById('element').style.display = "block";
+                    document.getElementById("title").style.display = "block";
+                    document.getElementById("inputData2").style.display = "block";
+                    document.getElementById("element2").style.display = "block";
             
-            Duration : ${document.getElementById("countDownTime").value}
-            `;
-        document.getElementById("title1").style.display = "block";
-        document.getElementById("inputData").style.display = "block";
-        document.getElementById("element").style.display = "block";
-        document.getElementById("inputData2").style.display = "block";
-        document.getElementById("element2").style.display = "block";
-    
+                }
+            }
         }
-    }
-}
-function start(){
-        
-    document.getElementById("element").style.display = "none";
-    document.getElementById("inputData").style.display = "none";
-    document.getElementById("title2").style.display = "none";
-    document.getElementById("inputData2").style.display = "none";
-    document.getElementById("element2").style.display = "none";
-    
-    var num=1;
-    var n= document.getElementById("loop").value-1;
-    var secs=document.getElementById("secs").value;
-    var breakTime=document.getElementById("breakTime").value;
-    clearInterval(myTimer);
-    myTimer= setInterval(clock,1000);
-    function clock(){
-        if(secs!=0){
-            secs--;
-            document.getElementById("timeMessage").innerHTML=
-            `<div>
-                <h3 class='formTitle'>Round</h3>
-                <h3>${num}/${document.getElementById("loop").value}</h3>
-            <br>
-            Workout
-            <img src="img/workout2.gif" class="imgDiv" alt="" width="400" >
-            <div>
-                ${secs}
-            </div>`;
+        function start(){
+                
+            document.getElementById("element").style.display = "none";
+            document.getElementById("inputData").style.display = "none";
+            document.getElementById("title2").style.display = "none";
+            document.getElementById("inputData2").style.display = "none";
+            document.getElementById("element2").style.display = "none";
             
-        }else if(breakTime!=0){
-            breakTime--;
-            document.getElementById("timeMessage").innerHTML=
-            `<div>
-            <h3 class='formTitle'>Round</h3>
-            <h3>${num}/${document.getElementById("loop").value}</h3>
-            
-            
-            <div>
-                Break
-                <img src="img/break2.gif" class="imgDiv" alt="" width="300" >
-                ${breakTime}
-            </div>`;
-            
-        }else if(n>0){
-            ++num;
-            n--;
-            secs=document.getElementById("secs").value;
-            breakTime=document.getElementById("breakTime").value;
-        }else{
+            var num=1;
+            var n= document.getElementById("loop").value-1;
+            var secs=document.getElementById("secs").value;
+            var breakTime=document.getElementById("breakTime").value;
             clearInterval(myTimer);
+            myTimer= setInterval(clock,1000);
+            function clock(){
+                if(secs!=0){
+                    secs--;
+                    document.getElementById("timeMessage").innerHTML=
+                    `<div>
+                        <h3 class='formTitle'>Round</h3>
+                        <h3>${num}/${document.getElementById("loop").value}</h3>
+                    <br>
+                    Workout
+                    <img src="img/workout2.gif" class="imgDiv" alt="" width="400">
+                    <div>
+                        ${secs}
+                    </div>`;
+                    
+                }else if(breakTime!=0){
+                    breakTime--;
+                    document.getElementById("timeMessage").innerHTML=
+                    `<div>
+                    <h3 class='formTitle'>Round</h3>
+                    <h3>${num}/${document.getElementById("loop").value}</h3>
+                    <div>
+                        Break
+                        <img src="img/break2.gif" class="imgDiv" alt="" width="300" >
+                        ${breakTime}
+                    </div>`;
+                    
+                }else if(n>0){
+                    ++num;
+                    n--;
+                    secs=document.getElementById("secs").value;
+                    breakTime=document.getElementById("breakTime").value;
+                }else{
+                    clearInterval(myTimer);
+                    
+                    document.getElementById("inputData").style.display = "block";
+                    document.getElementById('element').style.display = "block";
+                    document.getElementById("title2").style.display = "block";
+                    document.getElementById("inputData2").style.display = "block";
+                    document.getElementById("element2").style.display = "block";
+                    document.getElementById('timeMessage').innerHTML = 
+                    `<div class='formTitle'>Finish the Training</div> 
+                    <br> Loop ${document.getElementById("loop").value}
+                    <br>
+                    Duration : ${document.getElementById("secs").value}
+                    <br>
+                    Break : ${document.getElementById("breakTime").value}
+                    `;
+                }
+            }
             
-            document.getElementById("inputData").style.display = "block";
-            document.getElementById('element').style.display = "block";
-            document.getElementById("title2").style.display = "block";
-            document.getElementById("inputData2").style.display = "block";
-            document.getElementById("element2").style.display = "block";
-            document.getElementById('timeMessage').innerHTML = 
-            `<div class='formTitle'>Finish the Training</div> 
-            <br> Loop ${document.getElementById("loop").value}
-            <br>
-            Duration : ${document.getElementById("secs").value}
-            <br>
-            Break : ${document.getElementById("breakTime").value}
-            `
         }
-    }
-    
-}
 
 
 
