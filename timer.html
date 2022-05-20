@@ -181,7 +181,8 @@ button{
                     document.getElementById("title").style.display = "block";
                     document.getElementById("inputData2").style.display = "block";
                     document.getElementById("element2").style.display = "block";
-            
+                    var audio = new Audio('finishSOund.wav');
+                        audio.play();
                 }
             }
         }
@@ -231,6 +232,7 @@ button{
                     secs=document.getElementById("secs").value;
                     breakTime=document.getElementById("breakTime").value;
                 }else{
+
                     clearInterval(myTimer);
                     
                     document.getElementById("inputData").style.display = "block";
@@ -246,6 +248,8 @@ button{
                     <br>
                     Break : ${document.getElementById("breakTime").value}
                     `;
+                    var audio = new Audio('finishSOund.wav');
+                        audio.play();
                 }
             }
             
